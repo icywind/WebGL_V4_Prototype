@@ -38,7 +38,7 @@ namespace Agora.Rtc
         private const string AgoraRtcLibName = "AgoraRtcWrapper";
 #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
         private const string AgoraRtcLibName = "AgoraRtcWrapperUnity";
-#elif UNITY_IPHONE
+#elif UNITY_IPHONE || UNITY_WEBGL
 		private const string AgoraRtcLibName = "__Internal";
 #else
         private const string AgoraRtcLibName = "AgoraRtcWrapper";
@@ -79,7 +79,11 @@ namespace Agora.Rtc
                 Marshal.Copy(lengths, 0, lengthPtr, (int)lengths.Length);
             }
             apiParam.length = lengthPtr;
+#if UNITY_WEBGL && !UNITY_EDITOR
+            int retval = CallIrisApi(engine_ptr, func_name, @params);
+#else
             int retval = CallIrisApi(engine_ptr, ref apiParam);
+#endif
 
             if (lengthPtr != IntPtr.Zero)
             {
@@ -91,7 +95,11 @@ namespace Agora.Rtc
 
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+#if UNITY_WEBGL && !UNITY_EDITOR
+        internal static extern int CallIrisApi(IrisRtcEnginePtr engine_ptr, string func_name, string apiParam);
+#else
         internal static extern int CallIrisApi(IrisRtcEnginePtr engine_ptr, ref IrisCApiParam apiParam);
+#endif
 
         //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         //internal static extern void Attach(IrisRtcEnginePtr engine_ptr, IrisVideoFrameBufferManagerPtr manager_ptr);

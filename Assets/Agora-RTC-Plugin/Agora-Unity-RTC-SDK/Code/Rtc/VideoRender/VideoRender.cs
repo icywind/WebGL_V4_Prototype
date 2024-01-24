@@ -1,4 +1,4 @@
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_WEBGL
 
 using System;
 
@@ -103,7 +103,7 @@ namespace Agora.Rtc
                 _videoFrameConfig.video_frame_format = (int)frameType;
                 _videoFrameConfig.uid = uid;
                 _videoFrameConfig.channelId = key;
-                return AgoraRtcNative.GetVideoFrameCache(rtcRenderingHandle,  ref _videoFrameConfig, ref video_frame, out is_new_frame);
+                return AgoraRtcNative.GetVideoFrameCache(rtcRenderingHandle, ref _videoFrameConfig, ref video_frame, out is_new_frame);
             }
             return IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER;
         }

@@ -1,4 +1,4 @@
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID  || UNITY_WEBGL
 
 using System;
 using System.Collections.Generic;
@@ -52,7 +52,7 @@ namespace Agora.Rtc
                     {
                         _queue.Dequeue().Invoke();
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         AgoraLog.LogError("[Exception] AgoraCallbackQueue: " + e);
                     }

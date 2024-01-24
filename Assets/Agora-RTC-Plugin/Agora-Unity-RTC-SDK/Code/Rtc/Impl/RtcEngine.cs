@@ -3374,7 +3374,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.IsFeatureAvailableOnDevice(type);
         }
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_WEBGL
         public override int SendMetadata(Metadata metadata, VIDEO_SOURCE_TYPE source_type)
         {
             if (_rtcEngineImpl == null)
