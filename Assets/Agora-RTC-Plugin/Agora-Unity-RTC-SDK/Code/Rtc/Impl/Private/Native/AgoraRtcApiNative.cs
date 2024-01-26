@@ -79,8 +79,12 @@ namespace Agora.Rtc
                 Marshal.Copy(lengths, 0, lengthPtr, (int)lengths.Length);
             }
             apiParam.length = lengthPtr;
+
 #if UNITY_WEBGL && !UNITY_EDITOR
-            int retval = CallIrisApi(engine_ptr, func_name, @params);
+            // turning pointer i/o into string i/o
+            // require JS side to convert int, long, bool return types into string
+            int retval = 0;
+	        apiParam.Result = CallIrisApi(engine_ptr, func_name, @params);
 #else
             int retval = CallIrisApi(engine_ptr, ref apiParam);
 #endif
@@ -96,7 +100,7 @@ namespace Agora.Rtc
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
 #if UNITY_WEBGL && !UNITY_EDITOR
-        internal static extern int CallIrisApi(IrisRtcEnginePtr engine_ptr, string func_name, string apiParam);
+        internal static extern string CallIrisApi(IrisRtcEnginePtr engine_ptr, string func_name, string apiParam);
 #else
         internal static extern int CallIrisApi(IrisRtcEnginePtr engine_ptr, ref IrisCApiParam apiParam);
 #endif

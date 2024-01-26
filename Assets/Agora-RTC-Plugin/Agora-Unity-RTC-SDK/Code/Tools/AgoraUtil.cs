@@ -321,10 +321,18 @@ namespace Agora.Rtc
 
         internal string Result
         {
+#if UNITY_WEBGL && !UNITY_EDITOR
+            set
+            {
+                _result = value;
+            }
+#endif
             get
             {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_WEBGL
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                 return Marshal.PtrToStringAnsi(result);
+#elif UNITY_WEBGL && !UNITY_EDITOR
+                return _result;
 #else
                 return AgoraUtil.StringFromNativeUtf8(result);
 #endif
@@ -353,6 +361,9 @@ namespace Agora.Rtc
         internal string data;
         internal uint data_size;
 
+#if UNITY_WEBGL && !UNITY_EDITOR
+        private string _result;
+#endif
         internal IntPtr result;
 
         internal IntPtr buffer;

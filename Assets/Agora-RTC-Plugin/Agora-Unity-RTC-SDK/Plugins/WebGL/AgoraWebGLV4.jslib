@@ -1,4 +1,18 @@
 var LibraryAgoraWebGLV4 = {
+    $AgoraTool: {
+      agoraToString: function (ptrToSomeCString) {
+            if (typeof UTF8ToString == "undefined")
+                return Pointer_stringify(ptrToSomeCString);
+            else
+                return UTF8ToString(ptrToSomeCString);
+      },
+      agoraToStringBuffer: function(mystring) {
+            var bufferSize = lengthBytesUTF8(mystring) + 1;
+            var buffer = _malloc(bufferSize);
+            stringToUTF8(mystring, buffer, bufferSize);
+            return buffer;
+      }
+    },
     CreateIrisApiEngine:function(_) {
       console.log("JS------------> CreateIrisApiEngine");
     },
@@ -15,6 +29,9 @@ var LibraryAgoraWebGLV4 = {
       let func = UTF8ToString(funcname);
       let params = UTF8ToString(apiParam);
       console.log("JS------------> CAllIrisAPI, func_name:" + func + " params:" + params);
+      /// @Here: call the wrapper functions and obtain a return value
+      let retval = {result:0};  // for instance, a success (default) return value is 0
+      return AgoraTool.agoraToStringBuffer( JSON.stringify(retval) );
     },
     
     CreateIrisRtcRendering:function(_) {},
@@ -54,5 +71,5 @@ var LibraryAgoraWebGLV4 = {
     ILocalSpatialAudioEngine_SetRemoteAudioAttenuation:function(_,_,_,_) {},
     
 };
-
+autoAddDeps(LibraryAgoraWebGLV4, '$AgoraTool');
 mergeInto(LibraryManager.library, LibraryAgoraWebGLV4);
