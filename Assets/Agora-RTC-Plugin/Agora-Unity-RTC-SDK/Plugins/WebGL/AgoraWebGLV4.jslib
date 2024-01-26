@@ -15,22 +15,24 @@ var LibraryAgoraWebGLV4 = {
     },
     CreateIrisApiEngine:function(_) {
       console.log("JS------------> CreateIrisApiEngine");
+      createRtcEngine();
     },
     DestroyIrisApiEngine:function(_) {
       console.log("JS------------> DestroyIrisApiEngine");
     },
     CreateIrisEventHandler:function(_) {
-      console.log("JS------------> DestroyIrisApiEngine");
+      console.log("JS------------> CreateIrisEventHandler");
     },
     DestroyIrisEventHandler:function(_) {
-      console.log("JS------------> DestroyIrisApiEngine");
+      console.log("JS------------> DestroyIrisEventHandler");
     },
     CallIrisApi:function(_, funcname, apiParam) {
       let func = UTF8ToString(funcname);
       let params = UTF8ToString(apiParam);
       console.log("JS------------> CAllIrisAPI, func_name:" + func + " params:" + params);
       /// @Here: call the wrapper functions and obtain a return value
-      let retval = {result:0};  // for instance, a success (default) return value is 0
+      let rc = agoraAPICall(func, params);
+      let retval = {result:rc};  // for instance, a success (default) return value is 0
       return AgoraTool.agoraToStringBuffer( JSON.stringify(retval) );
     },
     
